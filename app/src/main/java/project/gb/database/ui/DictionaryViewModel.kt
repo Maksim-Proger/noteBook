@@ -19,7 +19,13 @@ class DictionaryViewModel(private val dictionaryDao: DictionaryDao) : ViewModel(
 
     fun onSave(userWord: String) {
         viewModelScope.launch {
-            dictionaryDao.addWord(Word(userWord, 1))
+            val existingWord = dictionaryDao.getWordById(userWord)
+            if (existingWord != null) {
+                dictionaryDao.updateWordCount(existingWord.wordId, existingWord.count + 1)
+            } else {
+                dictionaryDao.addWord(Word(userWord, 1))
+            }
         }
     }
+
 }

@@ -13,4 +13,10 @@ interface DictionaryDao {
 
     @Insert
     suspend fun addWord(word: Word)
+
+    @Query("SELECT * FROM word WHERE word_id = :wordId LIMIT 1")
+    suspend fun getWordById(wordId: String): Word?
+
+    @Query("UPDATE word SET count = :count WHERE word_id = :wordId")
+    suspend fun updateWordCount(wordId: String, count: Int)
 }
