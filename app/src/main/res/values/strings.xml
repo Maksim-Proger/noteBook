@@ -3,5 +3,6 @@
     <string name="user_word">Введите слово</string>
     <string name="button_save">Добавить</string>
     <string name="button_clear">Очистить базу</string>
-
+    <string name="text_error">В слове допустимы только буквы и дефисы и длина строки
+        должна быть не менее трех символов</string>
 </resources>

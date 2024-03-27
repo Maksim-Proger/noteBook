@@ -10,15 +10,18 @@
         android:id="@+id/field_word"
         android:layout_width="0dp"
         android:layout_weight="5"
+        android:padding="5dp"
         android:layout_height="wrap_content"
-        android:background="@color/content"/>
+        android:background="@drawable/recording_style"/>
 
     <TextView
         android:id="@+id/field_count"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:padding="5dp"
         android:layout_marginStart="10dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:background="@color/content"/>
+        android:background="@drawable/recording_style"/>
 
 </LinearLayout>

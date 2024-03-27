@@ -19,4 +19,7 @@ interface DictionaryDao {
 
     @Query("UPDATE word SET count = :count WHERE word_id = :wordId")
     suspend fun updateWordCount(wordId: String, count: Int)
+
+    @Query("DELETE FROM word")
+    suspend fun delete()
 }
