@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
+import project.gb.database.R
 import project.gb.database.adapter.DictionaryAdapter
 import project.gb.database.databinding.FragmentMainBinding
 import project.gb.database.repository.App
@@ -49,9 +51,38 @@ class MainFragment : Fragment() {
             viewModel.onSave(binding.textInputEditText.text.toString())
         }
 
+        binding.textInputEditText.doOnTextChanged { text, _, _, _ ->
+            viewModel.checkingEnteredText(text)
+        }
+
+        binding.clear.setOnClickListener {
+            viewModel.onDelete()
+        }
+
         print()
+        checkState()
     }
 
+    private fun checkState() {
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                when (it) {
+                    State.ERROR -> {
+                        binding.save.isEnabled = false
+                        binding.textInputLayout.isErrorEnabled = true
+                        binding.textInputLayout.error = resources.getString(R.string.text_error)
+                    }
+
+                    State.SUCCESS -> {
+                        binding.save.isEnabled = true
+                        binding.textInputLayout.isErrorEnabled = false
+                    }
+
+                    State.START -> binding.save.isEnabled = false
+                }
+            }
+        }
+    }
 
     private fun print() {
         lifecycleScope.launch {
